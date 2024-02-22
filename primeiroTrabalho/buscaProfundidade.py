@@ -1,30 +1,34 @@
-from collections import deque
-
-
 grafo = {
-    'Uberlândia': {'Araguari', 'Tupaciguara', 'Monte Alegre de Minas', 'Uberaba'},
-    'Araguari': {'Uberlândia', 'Tupaciguara', 'Monte Carmelo'},
-    'Tupaciguara': {'Uberlândia', 'Araguari', 'Monte Alegre de Minas'},
-    'Monte Alegre de Minas': {'Uberlândia', 'Tupaciguara'},
-    'Monte Carmelo': {'Uberlândia', 'Araguari'},
-    'Uberaba': {'Uberlândia', 'Delta', 'Igarapava'}
+    'Brazil': [ 'Rio de Janeiro',  'São Paulo', 'Minas Gerais', 'Bahia',  'Ceará'],
+    'Rio de Janeiro': [ 'Rio de Janeiro City','Niterói','Nova Iguaçu','Campos dos Goytacazes'],
+    'São Paulo' : [ 'São Paulo City','Campinas','Guarulhos', 'Santos'], 
+    'Minas Gerais': [ 'Belo Horizonte','Uberlândia','Contagem','Juiz de Fora'],
+    'Bahia': [ 'Salvador','Feira de Santana','Vitória da Conquista'],
+    'Ceará': [ 'Fortaleza', 'Caucaia', 'Juazeiro do Norte'],
+    'Campos dos Goytacazes' : ['Campos City', 'São João da Barra', 'Itaperuna'],
+    'Santos': ['Santos City', 'São Vicente', 'Praia Grande'],
+    'Juiz de Fora': ['Juiz de Fora City', 'Muriaé', 'Cataguases']
 }
 
+def dfs(graph, start, target, visited=None, path=None):
+    if visited is None:
+        visited = set()
+    if path is None:
+        path = []
+        
+    visited.add(start)
+    path.append(start)
 
-def imprimir_arvore(grafo, raiz):
-    fila = deque([raiz])
-    visitados = set()
+    if start == target:
+        return True
+    
+    for next_node in graph.get(start, []):
+        if next_node not in visited:
+            if dfs(graph, next_node,target, visited, path):
+                return path
+     
+    return False
 
-    while fila:
-        vertice = fila.popleft()
-        if vertice not in visitados:
-            print(f'{vertice}:')
-            visitados.add(vertice)
-            vizinhos = grafo.get(vertice, set())
-            for vizinho in vizinhos:
-                if vizinho not in visitados:
-                    print(f"\t{vizinho}")
-                    fila.append(vizinho)
-            print(50 * '-')
-
-imprimir_arvore(grafo, 'Uberlândia')
+print("Caminho percorrido: ")
+if dfs(grafo, 'São Paulo', 'Feira de Santana') == False: 
+    print('Impossivel chegar')
