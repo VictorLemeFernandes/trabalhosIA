@@ -40,7 +40,13 @@ let treeData = {
             value: 'Minas Gerais',
             children: [
                 { value: 'Belo Horizonte', children: [] },
-                { value: 'Uberlândia', children: [] },
+                { value: 'Uberlândia', children: [
+                    { value: 'Uberaba', children: [
+                        { value: 'Igarapava', children: [] },
+                        { value: 'Delta', children: [] },
+                    ] },
+                    { value: 'Araguari', children: [] },
+                ] },
                 { value: 'Contagem', children: [] },
                 {
                     value: 'Juiz de Fora',
@@ -95,7 +101,7 @@ const renderTree = () => {
         .attr('d', d3.linkHorizontal()
             .x(d => d.y)
             .y(d => d.x))
-        .style('stroke', d => d.source.data.visited ? '#ccc' : 'forestgreen' )
+        .style('stroke', 'forestgreen')
 
     const node = svg.selectAll('.node')
         .data(treeNodes.descendants())
