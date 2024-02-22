@@ -44,6 +44,7 @@ let treeData = {
                     { value: 'Uberaba', children: [
                         { value: 'Igarapava', children: [] },
                         { value: 'Delta', children: [] },
+                        { value: 'Conceição das Alagoas', children: [] }
                     ] },
                     { value: 'Araguari', children: [] },
                 ] },

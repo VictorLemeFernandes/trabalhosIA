@@ -49,9 +49,10 @@ def dfs(graph, start, target, visited=None, path=None):
 
 print("Caminho percorrido:")
 # Chama a função DFS para encontrar um caminho de 'Minas Gerais' até 'Juiz de Fora City'.
-path = dfs(grafo, 'Minas Gerais', 'Juiz de Fora City')
+path = dfs(grafo, 'Brazil', 'Araguari')
 # Se um caminho for encontrado, imprime-o.
 if path != False:
+    print('Numero de lugares visitados:', len(path))
     print(path)
 # Caso contrário, imprime que é impossível chegar.
 else:
