@@ -13,23 +13,25 @@ names = ['Loan ID', 'Gender', 'Married', 'Dependents', 'Education', 'Self_Employ
 # Lê o dataset
 df = pd.read_csv(url, names=names)
 
-df.head()
-
-X = df.drop('Loan_Status', axis=1)
-y = df['Loan_Status']
+X = df.drop('Loan_Status', axis=1) # Remove a coluna 'Loan_Status' do dataframe
+y = df['Loan_Status'] # Armazena os dados da coluna 'Loan_Status' na variável y
 
 # Separa dados de testes e treino
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
+# Faz a padronização dos dados de treinamento e teste
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
-knn = KNeighborsClassifier(n_neighbors=10)
+# Cria instância do classificador KNN com n_neighbors vizinhos e depois o treina com os dados de treinamento padronizados
+knn = KNeighborsClassifier(n_neighbors=11)
 knn.fit(X_train, y_train)
 
+# Previsões nos dados de teste
 y_pred = knn.predict(X_test)
 
+# Calculo da acurácia
 accuracy = accuracy_score(y_test, y_pred)
 print("Acurácia:", accuracy)
 
