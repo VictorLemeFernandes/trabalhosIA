@@ -17,7 +17,7 @@ X = df.drop('Loan_Status', axis=1) # Remove a coluna 'Loan_Status' do dataframe
 y = df['Loan_Status'] # Armazena os dados da coluna 'Loan_Status' na variável y
 
 # Separa dados de testes e treino
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
 # Faz a padronização dos dados de treinamento e teste
 scaler = StandardScaler()
