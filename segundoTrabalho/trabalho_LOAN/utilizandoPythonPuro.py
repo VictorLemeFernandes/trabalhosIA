@@ -18,6 +18,8 @@ df = pd.read_csv(url, names=names)
 todasAcuracias = []
 todasMedidasF = []
 todasMatrizesConfusao = []
+acuraciasParaGrafico = []
+medidasF_Grafico = []
 
 def knn(k, colunasDrops):
     X = df.drop(colunasDrops, axis=1) # Remove a coluna 'Loan_Status' do dataframe
@@ -61,29 +63,38 @@ colunasDropadas = [
     ['Loan_Status', 'Gender', 'Self_Employed', 'Credit_History']
 ]
 
+iteracoes = 500
+
 for j in colunasDropadas:
-    for i in range(0, 500):
+    for i in range(0, iteracoes):
         knn(11, j) # knn(k = vizinhos, colunasDropadas)
     
     print(f'Retirando as seguintes colunas: {j}')
     print(f'Média da acurácia: {numpy.mean(todasAcuracias)}')
     print(f'Média da medida F: {numpy.mean(todasMedidasF)}')
+    
+    acuraciasParaGrafico.append(numpy.mean(todasAcuracias))
+    medidasF_Grafico.append(numpy.mean(todasMedidasF))
 
     matrizAuxiliar = numpy.array(todasMatrizesConfusao) # Transforma a matriz em tridimensional p/ ser tratada no numpy
     print(f'Média das matrizes de confusão: \n{numpy.mean(matrizAuxiliar, axis=0)}')
+    todasAcuracias = []
+    todasMedidasF = []
+    todasMatrizesConfusao = []
+    print('\n')
 
 
-# Variação da acurácia e da medida F ao longo das 1000 iterações do algoritmo KNN
+# Variação da acurácia e da medida F ao longo das N iterações do algoritmo KNN
 plt.figure(figsize=(10, 6))
 
 # Plotando a variação da acurácia
-plt.plot(range(1, 1001), todasAcuracias, label='Acurácia', color='blue')
+plt.plot(range(1, len(acuraciasParaGrafico) + 1), acuraciasParaGrafico, label='Acurácia', color='blue')
 
 # Plotando a variação da medida F
-plt.plot(range(1, 1001), todasMedidasF, label='Medida F', color='green')
+plt.plot(range(1, len(medidasF_Grafico) + 1), medidasF_Grafico, label='Medida F', color='green')
 
 #legendas
-plt.title('Variação da Acurácia e Medida F ao longo das iterações')
+plt.title('Variação da Acurácia e Medida F ao longo das iterações (qtde de testes de drop colunas)')
 plt.xlabel('Iterações')
 plt.ylabel('Valor')
 plt.legend()
