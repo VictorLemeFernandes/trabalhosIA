@@ -4,6 +4,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy
+import matplotlib.pyplot as plt
 
 # Salvando o caminho dos dados
 url = "segundoTrabalho\\trabalho_LOAN\\data-set\\arquivoKNN_normalizado.csv"
@@ -61,3 +62,23 @@ print(f'Média da medida F: {numpy.mean(todasMedidasF)}')
 
 matrizAuxiliar = numpy.array(todasMatrizesConfusao) # Transforma a matriz em tridimensional p/ ser tratada no numpy
 print(f'Média das matrizes de confusão: \n{numpy.mean(matrizAuxiliar, axis=0)}')
+
+
+# Variação da acurácia e da medida F ao longo das 1000 iterações do algoritmo KNN
+plt.figure(figsize=(10, 6))
+
+# Plotando a variação da acurácia
+plt.plot(range(1, 1001), todasAcuracias, label='Acurácia', color='blue')
+
+# Plotando a variação da medida F
+plt.plot(range(1, 1001), todasMedidasF, label='Medida F', color='green')
+
+#legendas
+plt.title('Variação da Acurácia e Medida F ao longo das iterações')
+plt.xlabel('Iterações')
+plt.ylabel('Valor')
+plt.legend()
+plt.grid(True)
+
+# Exibindo o gráfico
+plt.show()
