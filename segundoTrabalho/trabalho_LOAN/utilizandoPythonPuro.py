@@ -51,13 +51,23 @@ def knn(k, colunasDrops):
 
 
 # Colunas/atributos que podem ser retirados da classificação
-colunasDropadas = ['Loan_Status']
+colunasDropadas = [
+    ['Loan_Status'],
+    ['Loan_Status', 'Gender', 'Married'],
+    ['Loan_Status', 'Self_Employed', 'Education', 'Loan_Amount_Term', 'Credit_History'],
+    ['Loan_Status', 'Property_Area', 'LoanAmount'],
+    ['Loan_Status', 'Education'],
+    ['Loan_Status', 'Gender', 'Self_Employed', 'Credit_History']
+]
 
-for i in range(0, 1000):
-    knn(11, colunasDropadas) # knn(k = vizinhos, colunasDropadas)
+for j in colunasDropadas:
+    for i in range(0, 500):
+        knn(11, j) # knn(k = vizinhos, colunasDropadas)
+    
+    print(f'Retirando as seguintes colunas: {j}')
+    print(f'Média da acurácia: {numpy.mean(todasAcuracias)}')
+    print(f'Média da medida F: {numpy.mean(todasMedidasF)}')
 
-print(f'Média da acurácia: {numpy.mean(todasAcuracias)}')
-print(f'Média da medida F: {numpy.mean(todasMedidasF)}')
-
-matrizAuxiliar = numpy.array(todasMatrizesConfusao) # Transforma a matriz em tridimensional p/ ser tratada no numpy
-print(f'Média das matrizes de confusão: \n{numpy.mean(matrizAuxiliar, axis=0)}')
+    matrizAuxiliar = numpy.array(todasMatrizesConfusao) # Transforma a matriz em tridimensional p/ ser tratada no numpy
+    print(f'Média das matrizes de confusão: \n{numpy.mean(matrizAuxiliar, axis=0)}')
+    print('\n')
